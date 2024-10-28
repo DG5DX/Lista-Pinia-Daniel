@@ -33,4 +33,6 @@ export const useAdminStore = defineStore('admin', () => {
     deleteActivity,
     setSelectedActivity 
   };
+}, {
+  persist: true
 });

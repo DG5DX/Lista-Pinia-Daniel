@@ -36,42 +36,40 @@
   });
   
   function onSubmit() {
-    store.updateActivity(activity.value);
-    Notify.create({ message: 'Actividad actualizada exitosamente', color: 'green' });
-    setTimeout(() => {
-      router.push('/');
-    }, 500);
+    const missingFields = [];
+    if (!activity.value.description) missingFields.push('Descripción');
+    if (!activity.value.date) missingFields.push('Fecha');
+    if (!activity.value.status) missingFields.push('Estado');
+  
+    if (missingFields.length === 0) {
+      store.updateActivity(activity.value);
+      Notify.create({ message: 'Actividad actualizada exitosamente', color: 'green' });
+      setTimeout(() => {
+        router.push('/');
+      }, 500);
+    } else {
+      Notify.create({
+        message: `Por favor completa los siguientes campos: ${missingFields.join(', ')}`,
+        color: 'red'
+      });
+    }
   }
-  </script>  
+  </script>
   
   <style scoped>
   h2 {
     margin: 20px;
     text-align: center;
   }
-  
   .form-container {
     padding: 20px;
   }
-  
   .input-field {
     margin-bottom: 20px;
   }
-  
   .button-container {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
   }
-  
-  .q-btn {
-    padding: 10px 20px;
-    font-weight: bold;
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .q-btn:hover {
-    background-color: #0056b3;
-  }
-  </style>
+  </style>  

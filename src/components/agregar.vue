@@ -27,12 +27,20 @@
   const statusOptions = ['Completado', 'Pendiente'];
   
   function onSubmit() {
-    if (activityData.value.description && activityData.value.date && activityData.value.status) {
+    const missingFields = [];
+    if (!activityData.value.description) missingFields.push('Descripción');
+    if (!activityData.value.date) missingFields.push('Fecha');
+    if (!activityData.value.status) missingFields.push('Estado');
+  
+    if (missingFields.length === 0) {
       adminStore.addActivity({ ...activityData.value });
       activityData.value = { description: '', date: '', status: '' };
       Notify.create({ message: 'Actividad agregada exitosamente', color: 'green' });
     } else {
-      Notify.create({ message: 'Por favor completa todos los campos', color: 'red' });
+      Notify.create({
+        message: `Por favor completa los siguientes campos: ${missingFields.join(', ')}`,
+        color: 'red'
+      });
     }
   }
   </script>
@@ -42,30 +50,16 @@
     margin: 20px;
     text-align: center;
   }
-  
   .form-container {
     padding: 20px;
   }
-  
   .input-field {
     margin-bottom: 20px;
   }
-  
   .button-container {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
-  }
-  
-  .q-btn {
-    padding: 10px 20px;
-    font-weight: bold;
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .q-btn:hover {
-    background-color: #0056b3;
   }
   </style>
   

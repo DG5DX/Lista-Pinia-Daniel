@@ -6,6 +6,10 @@ import { Quasar, Notify } from 'quasar';
 import '@quasar/extras/material-icons/material-icons.css';
 import 'quasar/src/css/index.sass';
 import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(App);
 
@@ -16,5 +20,5 @@ app.use(Quasar, {
 });
 
 app.use(router);
-app.use(createPinia());
+app.use(pinia);
 app.mount('#app');
